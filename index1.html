@@ -3,52 +3,30 @@
 </div>
 <script src="./boston.js"></script>
 <script>
+  function compareNumbers(a, b) {
+    return a[11] - b[11];
+  }
   function renderboston(bostonData, container) {
     let peopleData = bostonData.data;
     const len = peopleData.length; // boston is an array
-    var html = "<H1>Top Five Earners</H1>";
-    let earning_count = 0;
-    let base_person = { name: "", salary: 0 };
-    const topFive = [
-      base_person,
-      base_person,
-      base_person,
-      base_person,
-      base_person,
-    ];
-    for (let i = 0; i < len; i++) {
-      if (parseFloat(peopleData[i][11]) >= 100000) {
-        earning_count++;
-      }
-      for (let j = 0; j < 5; j++) {
-        //console.log(peopleData[i][8], peopleData[i][11], topFive[j].name, topFive[j].salary);
-        if (parseFloat(peopleData[i][11]) > parseFloat(topFive[j].salary)) {
-          new_person = { name: peopleData[i][8], salary: peopleData[i][11] };
-          topFive.splice(j, 0, new_person);
-          topFive.pop();
-          break;
-        }
-      }
-    }
+    var html = "";
+    peopleData.sort((a,b) => parseFloat(b[11]) - parseFloat(a[11]));
     for (let i = 0; i < 5; i++) {
       html +=
         '<li class="post">' +
         "<h2>" +
         "Name: " +
-        topFive[i].name +
+        peopleData[i][8] +
         "</h2>" +
         "<h3>" +
         "Salary: " +
-        topFive[i].salary +
+        peopleData[i][11] +
         "</h3>";
     }
     container.innerHTML =
       '<ul id = "Top 5">' +
       html +
-      "</ul>" +
-      "<H1> Number of people over 100K: " +
-      earning_count +
-      "</H1>";
+      "</ul>";      
   }
 
   renderboston(bostonData, document.getElementById("container"));
