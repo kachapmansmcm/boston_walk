@@ -3,16 +3,14 @@
 </div>
 <script src="./boston.js"></script>
 <script>
-  function compareNumbers(a, b) {
-    return a[11] - b[11];
-  }
   function renderboston(bostonData, container) {
     let peopleData = bostonData.data;
     const len = peopleData.length; // boston is an array
-    var html = "";
+    var html1 = "";
+    var html2 = "";
     peopleData.sort((a,b) => parseFloat(b[11]) - parseFloat(a[11]));
     for (let i = 0; i < 5; i++) {
-      html +=
+      html1 +=
         '<li class="post">' +
         "<h2>" +
         "Name: " +
@@ -23,11 +21,13 @@
         peopleData[i][11] +
         "</h3>";
     }
-    container.innerHTML =
-      '<ul id = "Top 5">' +
-      html +
-      "</ul>";      
+    topEarners = peopleData.filter(employee => parseFloat(employee[11]) > 200000 );
+    container.innerHTML ='<H1>Top 5 Salaries</H1><ul id = "topSalaries">' + html1 +"</ul>";
+    for (let i = 0; i < topEarners.length; i++) {
+      html2 +=
+        '<li class="post">' + '<h2>' + topEarners[i][8] + '</h2>' + '<h3>' + topEarners[i][11] + '</h3>';
+    }
+    container.innerHTML +='<H1>Over 200k</H1><ul id = "topEmployees">' + html2 +"</ul>";
   }
-
   renderboston(bostonData, document.getElementById("container"));
 </script>
